@@ -348,12 +348,15 @@ const DisplayView: React.FC = () => {
   const isQuestionVisible = !!currentQuestion && session.status !== QuizStatus.PREVIEW;
   const lockingTeam = session.submissions.length > 0 ? session.teams.find(t => t.id === session.submissions[session.submissions.length - 1].teamId) : null;
   const showLockedOverlay = (session.status === QuizStatus.LOCKED || lockingTeam) && currentQuestion?.roundType !== 'ASK_AI' && session.status !== QuizStatus.REVEALED;
+  const statusLabel = session.status.replace(/_/g, ' ');
 
   return (
     <div className="min-h-screen bg-[#020617] text-white overflow-hidden relative font-sans">
       <div className="absolute inset-0 z-0 bg-[#020617]">
           <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] opacity-20 animate-[nebula-drift_60s_infinite_ease-in-out]"
                style={{ background: 'radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.3), transparent 60%)' }} />
+          <div className="absolute top-[-35%] right-[-35%] w-[130%] h-[130%] opacity-20 animate-[nebula-drift_80s_infinite_ease-in-out_reverse]"
+               style={{ background: 'radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.28), transparent 65%)' }} />
           <div className="absolute inset-0 opacity-10 bg-grid-perspective" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#020617_95%)]" />
       </div>
@@ -387,6 +390,11 @@ const DisplayView: React.FC = () => {
                          currentQuestion.roundType === 'VISUAL' ? <Eye className="w-5 h-5 text-cyan-400" /> :
                          <Waves className="w-5 h-5 text-indigo-400" />}
                         <span className="text-xl font-display font-black uppercase tracking-tight">{currentQuestion.roundType} ROUND</span>
+                     </div>
+                     <div className="h-6 w-px bg-white/20" />
+                     <div className="text-right">
+                        <p className="text-[10px] tracking-[0.28em] uppercase font-black text-cyan-300/80">State</p>
+                        <p className="text-xs tracking-[0.18em] uppercase font-black text-cyan-100">{statusLabel}</p>
                      </div>
                  </div>
              )}
